@@ -1,16 +1,16 @@
 # Design summary and reported results
 
-This page transcribes the key information from the supplied project report, *Two-Stage CMOS Operational Amplifier Design in 180nm Technology*. Figures below are reported by that document and have not been independently reproduced as part of preparing this repository.
+This page summarizes the supplied report, *Two-Stage CMOS Operational Amplifier Design in 180nm Technology*, and records the transistor dimensions encoded in the uploaded LTspice schematic. The performance figures below are transcribed from the report; related screenshots are stored in [results/figures/](../results/figures/).
 
 ## Objective and architecture
 
 The design is a two-stage CMOS operational amplifier intended for a 10 pF capacitive load. The report discusses a 3 pF Miller compensation capacitor and a series nulling resistor used to improve phase margin.
 
-## Reported specification table
+## Reported specifications
 
 | Parameter | Value in supplied report |
 |---|---:|
-| Technology | TSMC 180 nm |
+| Technology target | 180 nm |
 | Supply | 1.8 V / 0 V |
 | Common-mode input | 0.9 V |
 | Load capacitance | 10 pF |
@@ -28,13 +28,13 @@ The report states that the uncompensated Miller architecture exhibits poor phase
 
 The report then describes a parametric SPICE sweep of a series nulling resistor and identifies 11 kΩ as the selected value. It reports compensated unity-gain bandwidth of 17.2 MHz and phase margin of 78.2°.
 
-These are source-reported figures. Add a new set of verified Bode plots and simulation settings under [results/](../results/) when the design is rerun using the correct model library.
+The figures are source-reported values and have not been independently re-simulated as part of this repository update. The uploaded plots can be inspected in [results/figures/](../results/figures/). Confirm the measurements from LTspice before describing the figures as independently reproduced.
 
-## Schematic sizing values and a discrepancy to resolve
+## Transistor dimensions used in the simulation
 
-The attached LTspice schematic encodes the following dimensions:
+The dimensions encoded in the uploaded schematic and confirmed by the project owner are:
 
-| Devices | Width | Length |
+| Devices | Width (W) | Length (L) |
 |---|---:|---:|
 | M1, M2 | 20 µm | 0.5 µm |
 | M3 | 40 µm | 0.5 µm |
@@ -42,4 +42,8 @@ The attached LTspice schematic encodes the following dimensions:
 | M6, M7 | 5 µm | 0.5 µm |
 | M8 | 5 µm | 0.5 µm |
 
-The report's transistor-sizing table leaves the width and length cells blank. Its text labels M8 as a second-stage bias device of approximately 3×, while the schematic gives M8 the same width as M6 and M7. Resolve the intended ratio and update the schematic and report together before presenting the dimensions as finalized.
+**M8 is documented as 5 µm wide**, matching the value used in the simulation. The supplied report's prose separately describes M8 as approximately 3× for second-stage bias, but the table leaves the transistor dimensions blank. This repository records the as-simulated width and does not alter it to match that ambiguous statement.
+
+## Model provenance
+
+The model file in the repository is named `tsmc018.lib`, but its header identifies the model set as `T58F SPICE BSIM3` and contains a note that flicker-noise parameters were manually added from another process. Confirm its source and suitability for this circuit before presenting it as a verified TSMC 180 nm model. Also confirm that the file's licence allows public redistribution.
