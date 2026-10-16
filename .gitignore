@@ -1,0 +1,24 @@
+# LTspice generated files
+*.raw
+*.log
+*.net
+*.bak
+*.plt
+*.op.raw
+*.tran.raw
+*.ac.raw
+
+# Local model libraries and PDK files (may be proprietary)
+models/*.lib
+models/*.LIB
+models/*.cir
+models/*.spice
+models/*.include
+models/pdk/
+models/tsmc*
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
