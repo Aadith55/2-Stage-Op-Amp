@@ -6,12 +6,12 @@ The schematic includes:
 models/tsmc018.lib
 ```
 
-This file is currently present in the public repository. Before sharing the repository further, confirm that the file's source and licence permit redistribution. A `.gitignore` entry does not remove files that are already tracked by Git.
+This is the model file used for the project simulation, as confirmed by the project owner.
 
-## Provenance and suitability
+## Model details and redistribution
 
-The file is named `tsmc018.lib`, but its header identifies the parameter set as `T58F SPICE BSIM3`. It also contains a comment that flicker-noise parameters were manually added from another process. The filename alone is not evidence that it is an official or suitable TSMC 180 nm model. Confirm the provenance and compatibility with the intended design before describing it as such.
+The file is named `tsmc018.lib`, but its header identifies the parameter set as `T58F SPICE BSIM3`. It also contains a comment that flicker-noise parameters were manually added from another process. This describes the file's contents; it does not change the fact that it is the model set used for the reported simulation.
 
-If redistribution is not explicitly permitted, remove the model file from the public repository and retain an authorized local copy for running the schematic. Do not commit proprietary foundry models or PDK files without permission.
+The repository is public, so confirm that the file's source and licence permit redistribution. A `.gitignore` entry does not remove a file that is already tracked by Git. If redistribution is not permitted, remove the model file from the public repository and retain an authorized local copy for running the schematic.
 
-The custom LTspice symbols are under `design/ltspice/sym/`. They reference the model names `CMOSP` and `CMOSN` with D, G, S, B terminals; confirm compatibility if LTspice produces netlist or model errors.
+The custom LTspice symbols are under `design/ltspice/sym/`. They reference model names `CMOSP` and `CMOSN` with D, G, S, B terminals.
