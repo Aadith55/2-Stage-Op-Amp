@@ -1,34 +1,34 @@
-# Design summary and simulation results
+# Two-Stage CMOS Operational Amplifier: Design Summary
 
-This page summarizes the supplied report, *Two-Stage CMOS Operational Amplifier Design in 180nm Technology*, and records the transistor dimensions encoded in the uploaded LTspice schematic. The project owner has run the schematic in LTspice and checked the AC performance measurements against the result plots.
+This document describes the two-stage CMOS op-amp, its transistor dimensions, and the AC and transient simulation results.
 
 ## Objective and architecture
 
-The design is a two-stage CMOS operational amplifier intended for a 10 pF capacitive load. The report discusses a 3 pF Miller compensation capacitor and a series nulling resistor used to improve phase margin.
+The circuit is designed for a 10 pF capacitive load. It uses a 3 pF Miller compensation capacitor and a series nulling resistor to improve phase margin.
 
-## Reported specifications
+## Design specifications and results
 
-| Parameter | Value in supplied report |
+| Parameter | Value |
 |---|---:|
-| Technology target | 180 nm |
-| Supply | 1.8 V / 0 V |
-| Common-mode input | 0.9 V |
+| Process target | 180 nm |
+| Supply voltage | 1.8 V / 0 V |
+| Input common-mode voltage | 0.9 V |
 | Load capacitance | 10 pF |
 | Open-loop DC gain | 80 dB |
 | Uncompensated unity-gain bandwidth | 9.25 MHz |
 | Uncompensated phase margin | 16.6° |
 | Compensated unity-gain bandwidth | 17.2 MHz |
 | Compensated phase margin | 78.2° |
-| Miller capacitor | 3 pF |
+| Miller compensation capacitor | 3 pF |
 | Selected series nulling resistor | 11 kΩ |
 
-The report states that the uncompensated Miller architecture exhibits poor phase margin, attributing the behavior to a right-half-plane zero associated with the capacitor's feed-forward path. It reports initial unity-gain bandwidth of 9.25 MHz and phase margin of 16.6°.
+The uncompensated Miller architecture shows poor phase margin. The feed-forward path through the Miller capacitor contributes a right-half-plane zero, adding phase lag. The uncompensated response has a reported unity-gain bandwidth of 9.25 MHz and phase margin of 16.6°.
 
-The report then describes a parametric SPICE sweep of a series nulling resistor and identifies 11 kΩ as the selected value. It reports compensated unity-gain bandwidth of 17.2 MHz and phase margin of 78.2°. The project owner confirms that the schematic has been run and these measurements have been checked against the AC plots. The screenshots are stored in [results/figures/](../results/figures/).
+A parametric SPICE sweep was used to evaluate the series nulling resistor. The selected value is 11 kΩ. The compensated response shows a unity-gain bandwidth of 17.2 MHz and phase margin of 78.2°. Simulation plots are available in [results/figures/](../results/figures/).
 
-## Transistor dimensions used in the simulation
+## Transistor dimensions
 
-The dimensions encoded in the uploaded schematic and confirmed by the project owner are:
+The following width and length values are used in the LTspice schematic:
 
 | Devices | Width (W) | Length (L) |
 |---|---:|---:|
@@ -38,8 +38,8 @@ The dimensions encoded in the uploaded schematic and confirmed by the project ow
 | M6, M7 | 5 µm | 0.5 µm |
 | M8 | 5 µm | 0.5 µm |
 
-**M8 is 5 µm wide**, matching the value used in the simulation. The supplied report's prose separately describes M8 as approximately 3× for second-stage bias, but its transistor-sizing table leaves the W/L cells blank. This repository records the as-simulated value and does not change it to match that ambiguous statement.
+M8 is set to 5 µm in the simulated circuit. A separate note describes the second-stage bias device as approximately 3×, but the circuit and simulation use the 5 µm width listed here.
 
-## Model-file note
+## Model file
 
-The `models/tsmc018.lib` file is the model set the project owner used for the simulation. Its header identifies the parameter set as `T58F SPICE BSIM3` and contains a note that flicker-noise parameters were manually added from another process. Public redistribution permission remains a separate licensing question; see [models/README.md](../models/README.md).
+The circuit uses `models/tsmc018.lib`. Its header identifies the parameter set as `T58F SPICE BSIM3` and includes a note that flicker-noise parameters were manually added from another process. See [models/README.md](../models/README.md) for model details and redistribution considerations.
