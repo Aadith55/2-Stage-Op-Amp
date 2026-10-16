@@ -1,22 +1,40 @@
 # LTspice schematic
 
-Open `2-stage-opamp.asc` in LTspice. The schematic currently has a transient analysis directive enabled and an AC sweep directive commented out.
+Open `2-Stage op-Amp.asc` in LTspice. The schematic currently has transient analysis enabled, AC analysis commented out, and an `Rz` parameter sweep enabled.
 
-## Local dependencies
+## Project files and dependencies
 
-- **TSMC 180 nm model library:** place a licensed copy at `models/tsmc018.lib` at the repository root. The schematic uses the relative include `.include ../../models/tsmc018.lib`.
-- **Custom transistor symbols:** the schematic uses `sym\cmosp` and `sym\cmosn`. Their symbol definitions were not among the supplied attachments. Add the required symbol files to your LTspice symbol library, or change the schematic to use symbols supported by your own model setup.
-- **Model names and pin order:** confirm the custom symbols' netlist model names and pin mapping match the provided TSMC library. These details cannot be inferred from the supplied schematic alone.
+- **Schematic:** `2-Stage op-Amp.asc`
+- **Custom symbols:** `sym/cmosp.asy` and `sym/cmosn.asy` are included in this repository.
+- **Model library:** the schematic uses the relative include `.include ../../models/tsmc018.lib`. The model file currently exists in the repository; see [../../models/README.md](../../models/README.md) for the provenance and redistribution note.
+- **Symbol model names:** the custom symbols call the models `CMOSP` and `CMOSN` and define D, G, S, B terminals. Confirm these match the active model library and pin order if LTspice produces a netlist error.
+
+If LTspice cannot resolve the symbols from the schematic's `sym/` directory, configure that folder in the local symbol search path. Keep the repository copies as the project source of truth.
 
 ## Run transient analysis
 
-The default active directive is `.tran 10m`, with `.step param Rz 1k 20k 1k` to sweep the series nulling resistor from 1 kΩ through 20 kΩ. Run the simulation and inspect the output waveform for each step.
+The active transient directive is:
+
+```spice
+.tran 10m
+```
+
+The parameter sweep currently enabled is:
+
+```spice
+.step param Rz 1k 20k 1k
+```
+
+Run the simulation and plot `Vout`. Use the Step Legend if there are separate traces for the stepped values.
 
 ## Run AC analysis
 
-1. Edit the schematic's analysis directives: comment out `.tran 10m` and uncomment `.ac dec 100 10 100Meg`.
-2. Keep the input source's small-signal AC value set to 1.
-3. Run AC analysis and plot `Vout` magnitude and phase.
-4. Read unity-gain bandwidth and phase margin from the Bode response, using the correct stepped `Rz` trace.
+1. Comment out `.tran 10m`.
+2. Enable `.ac dec 100 10 100Meg`.
+3. Keep the input source's small-signal AC magnitude set to 1.
+4. Run the analysis and plot `Vout` magnitude in dB and phase.
+5. Use **View → Step Legend** to identify the `Rz=11k` trace.
 
-The supplied report identifies 11 kΩ as the selected compensation resistance. Confirm that value in the AC results before reporting the final compensated performance.
+For a single run at 11 kΩ, replace the sweep directive with `.param Rz=11k`. Restore the sweep when comparing multiple resistance values.
+
+The supplied report's compensated targets are 17.2 MHz unity-gain bandwidth and 78.2° phase margin. Report actual measurements from the current LTspice run rather than assuming the targets were reproduced.
