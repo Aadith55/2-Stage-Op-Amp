@@ -10,7 +10,7 @@ This project covers the design and LTspice simulation of a two-stage CMOS operat
 | Supply voltage | 1.8 V / 0 V |
 | Input common-mode voltage | 0.9 V |
 | Load capacitance | 10 pF |
-| Open-loop DC gain | 80 dB |
+| Open-loop DC gain | ~73 dB (simulated) |
 | Uncompensated unity-gain bandwidth | 9.25 MHz |
 | Uncompensated phase margin | 16.6° |
 | Compensated unity-gain bandwidth | 17.2 MHz |
@@ -70,6 +70,8 @@ The following dimensions are used in the circuit:
 | M8 | 5 µm | 0.5 µm | Second-stage bias |
 
 M8 is set to 5 µm in the simulated circuit. A separate design note describes the second-stage bias device as approximately 3×, but the schematic and simulation use the 5 µm value shown above.
+
+The measured open-loop gain is approximately 73 dB from the simulation, rather than the 80 dB stated in the original report. This README uses the value observed in the simulation.
 
 ## Simulation results
 
