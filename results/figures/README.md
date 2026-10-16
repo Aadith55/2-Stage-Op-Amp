@@ -1,9 +1,9 @@
-# Figures
+# Simulation figures
 
-Add the final LTspice plot exports here. Suggested filenames:
+The following plot images are currently included:
 
-- `ac-uncompensated.png`
-- `ac-compensated-rz-11k.png`
-- `transient-output.png`
+- `AC Analysis at 11kOhm.png`: AC response for the 11 kΩ compensation case.
+- `AC analysis Uncompensated.png`: uncompensated AC response.
+- `Transient Analysis.png`: output transient waveform.
 
-These are suggested names only. Use filenames that reflect the actual analysis and selected parameters. Do not add illustrative or placeholder plots as if they were simulation results.
+When replacing these with cleaner exports, retain the actual LTspice plot, readable axes, and measurement cursors or step legend. Do not present recreated or illustrative plots as simulation results.
