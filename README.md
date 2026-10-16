@@ -1,24 +1,26 @@
 # Two-Stage CMOS Operational Amplifier
 
-A two-stage CMOS op-amp design targeting the TSMC 180 nm process, captured in LTspice. The project focuses on open-loop gain and frequency compensation for a 10 pF capacitive load.
+An LTspice project for a two-stage CMOS operational amplifier intended for a 10 pF capacitive load. The repository contains the circuit schematic, its custom LTspice symbols, a SPICE model file, and the uploaded simulation screenshots.
 
-> **Simulation status:** the schematic has been organized for this repository, but it has not been re-run here. Reproduction still depends on the TSMC 180 nm model library and the custom LTspice symbols used by the original design. The performance figures below are reported in the supplied project report.
+> **Reproducibility note:** the repository contents have been organized, but the current circuit has not been independently re-simulated as part of this documentation update. Treat numerical performance values as reported by the supplied report or shown in the uploaded plots, as identified below.
 
 ## Reported specifications
 
-| Parameter | Reported value |
+| Parameter | Value in supplied report |
 |---|---:|
-| Process | TSMC 180 nm |
+| Technology target | 180 nm |
 | Supply | 1.8 V / 0 V |
 | Input common-mode voltage | 0.9 V |
 | Load capacitance | 10 pF |
 | Open-loop DC gain | 80 dB |
+| Uncompensated unity-gain bandwidth | 9.25 MHz |
+| Uncompensated phase margin | 16.6° |
 | Compensated unity-gain bandwidth | 17.2 MHz |
 | Compensated phase margin | 78.2° |
 | Miller capacitor | 3 pF |
-| Series nulling resistor | 11 kΩ |
+| Series nulling resistor selected in the report | 11 kΩ |
 
-The supplied report gives the uncompensated response as **9.25 MHz unity-gain bandwidth** and **16.6° phase margin**. It attributes the poor phase margin to a right-half-plane zero associated with the Miller capacitor. A series nulling resistor was swept to improve stability; the report identifies 11 kΩ as the selected value.
+The report attributes the poor uncompensated phase margin to a right-half-plane zero associated with the Miller capacitor and describes adding a series nulling resistor to improve stability. The figures in the table above are transcribed from the supplied report; verify measurements against the current LTspice plots before presenting them as independently reproduced results.
 
 ## Repository layout
 
@@ -28,45 +30,57 @@ The supplied report gives the uncompensated response as **9.25 MHz unity-gain ba
 ├── .gitignore
 ├── design/
 │   └── ltspice/
-│       ├── 2-stage-opamp.asc
-│       └── README.md
+│       ├── 2-Stage op-Amp.asc
+│       ├── README.md
+│       └── sym/
+│           ├── cmosn.asy
+│           ├── cmosp.asy
+│           └── README.md
 ├── docs/
 │   └── design-report.md
 ├── models/
-│   └── README.md
+│   ├── README.md
+│   └── tsmc018.lib
 └── results/
     ├── README.md
     └── figures/
+        ├── AC Analysis at 11kOhm.png
+        ├── AC analysis Uncompensated.png
+        ├── Transient Analysis.png
         └── README.md
 ```
 
 ## Getting started
 
 1. Install LTspice.
-2. Add the TSMC 180 nm model library locally as `models/tsmc018.lib`. See [models/README.md](models/README.md); do not commit foundry models unless their license explicitly permits redistribution.
-3. Make sure the custom symbol files referenced by the schematic (`cmosp` and `cmosn`) are available in your LTspice symbol library. See [design/ltspice/README.md](design/ltspice/README.md).
-4. Open `design/ltspice/2-stage-opamp.asc` in LTspice and run the AC sweep. The schematic sweeps `Rz` from 1 kΩ to 20 kΩ in 1 kΩ steps.
-5. Save the Bode plot and transient response screenshots under `results/figures/`, with the test setup and the selected `Rz` value recorded.
+2. Open `design/ltspice/2-Stage op-Amp.asc`.
+3. The schematic includes `../../models/tsmc018.lib`, relative to the schematic directory. Read [models/README.md](models/README.md) for the model-file provenance and redistribution caveat.
+4. The custom transistor symbols `cmosp` and `cmosn` are stored in `design/ltspice/sym/`. If your LTspice installation does not resolve these relative symbol references, configure that directory in its symbol search path.
+5. The schematic currently has transient analysis enabled and AC analysis commented out. To run AC analysis, comment out `.tran 10m` and enable `.ac dec 100 10 100Meg`.
+6. The directive `.step param Rz 1k 20k 1k` sweeps the compensation resistance. Use **View → Step Legend** in the waveform viewer to identify the trace for `Rz=11k`. For a single 11 kΩ run, replace the sweep directive with `.param Rz=11k`.
 
-For a transient run, switch the active analysis directive from `.ac dec 100 10 100Meg` to `.tran 10m`, then run the simulation again.
+## Transistor dimensions used in the simulation
 
-## Transistor dimensions in the supplied schematic
+The following dimensions are encoded in the uploaded schematic and reflect the values used in the simulation, as confirmed by the project owner.
 
-| Devices | Schematic dimensions (W/L) | Reported function |
-|---|---:|---|
-| M1, M2 | 20 µm / 0.5 µm | PMOS active loads |
-| M3 | 40 µm / 0.5 µm | Second-stage PMOS amplifier |
-| M4, M5 | 10 µm / 0.5 µm | NMOS differential input pair |
-| M6, M7 | 5 µm / 0.5 µm | Tail-current mirror |
-| M8 | 5 µm / 0.5 µm | Second-stage bias |
+| Devices | Width (W) | Length (L) | Function |
+|---|---:|---:|---|
+| M1, M2 | 20 µm | 0.5 µm | PMOS active loads |
+| M3 | 40 µm | 0.5 µm | Second-stage PMOS amplifier |
+| M4, M5 | 10 µm | 0.5 µm | NMOS differential input pair |
+| M6, M7 | 5 µm | 0.5 µm | Tail-current mirror |
+| M8 | 5 µm | 0.5 µm | Second-stage bias |
 
-**Sizing note:** the report's transistor-sizing table leaves dimensions blank and describes M8 as approximately 3× for second-stage bias. The attached schematic instead sets M8 to 5 µm, the same width as M6 and M7. Confirm the intended sizing before treating the table above as final.
+The supplied report's prose separately describes M8 as approximately 3×, but its transistor-sizing table leaves W/L blank. This repository documents **M8 = 5 µm**, which is the value used in the simulation, rather than changing it to match the ambiguous prose.
 
-## Important limitations
+## Included results
 
-- The original schematic referenced a TSMC model library at a machine-specific Windows path. That path has been changed to a repository-relative include, `../../models/tsmc018.lib`; the library itself is not included.
-- The custom `cmosp` and `cmosn` symbol definitions were not among the supplied files.
-- The report's simulation values are transcribed as reported, not independently verified in this environment.
-- Result screenshots and simulation logs still need to be added under `results/`.
+- [AC analysis at 11 kΩ](results/figures/AC%20Analysis%20at%2011kOhm.png)
+- [Uncompensated AC analysis](results/figures/AC%20analysis%20Uncompensated.png)
+- [Transient output waveform](results/figures/Transient%20Analysis.png)
 
-See [docs/design-report.md](docs/design-report.md) for the report-derived design summary and comparison of uncompensated versus compensated results.
+Keep the plots as direct LTspice exports and include legible axes, trace legends, and cursor measurements wherever they support a reported value.
+
+## Model-file note
+
+The file committed as `models/tsmc018.lib` has a header identifying the model set as **T58F SPICE BSIM3** and includes a note that flicker-noise parameters were manually added from another process. Confirm the file's provenance, suitability for this design, and permission to redistribute it publicly before describing it as an official TSMC 180 nm model or sharing the repository further. See [models/README.md](models/README.md).
