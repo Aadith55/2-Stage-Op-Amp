@@ -1,6 +1,6 @@
-# Simulation results
+# Simulation Results
 
-The project owner has run the schematic in LTspice, checked the AC measurements against the Bode plots, and reviewed the transient result. These plots are included below. The headline performance values are the values reported in the supplied design report.
+This folder contains the LTspice plots for the compensated AC response, uncompensated AC response, and transient output.
 
 ## Included plots
 
@@ -8,4 +8,6 @@ The project owner has run the schematic in LTspice, checked the AC measurements 
 - [Uncompensated AC analysis](figures/AC%20analysis%20Uncompensated.png)
 - [Transient output waveform](figures/Transient%20Analysis.png)
 
-The report lists 9.25 MHz unity-gain bandwidth and 16.6° phase margin for the uncompensated case, and 17.2 MHz and 78.2° for the compensated case. For any future rerun, preserve the LTspice version, model-file version/source, supply, input common-mode voltage, input AC magnitude, load capacitance, analysis settings, selected `Rz`, and the method used to read each measurement. State whether results are simulated or measured on hardware.
+The recorded results are 9.25 MHz unity-gain bandwidth and 16.6° phase margin for the uncompensated response, and 17.2 MHz unity-gain bandwidth and 78.2° phase margin for the compensated response.
+
+For future runs, keep a record of LTspice version, model-file source/version, supply voltage, input common-mode voltage, input AC magnitude, load capacitance, analysis settings, selected `Rz`, and how each measurement was read. State clearly whether any additional result is simulated or measured on hardware.
