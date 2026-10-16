@@ -42,4 +42,4 @@ M8 is set to 5 µm in the simulated circuit. A separate note describes the secon
 
 ## Model file
 
-The circuit uses `models/tsmc018.lib`. Its header identifies the parameter set as `T58F SPICE BSIM3` and includes a note that flicker-noise parameters were manually added from another process. See [models/README.md](../models/README.md) for model details and redistribution considerations.
+The circuit uses `models/tsmc018.lib`, which contains BSIM3 Level 49 model definitions for `CMOSN` and `CMOSP`. The file header identifies the parameter set as T58F SPICE BSIM3 Version 3.1. See [models/README.md](../models/README.md) for the model details.
