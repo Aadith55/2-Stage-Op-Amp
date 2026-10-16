@@ -52,7 +52,7 @@ The uncompensated circuit has poor phase margin due to a right-half-plane zero a
 
 1. Install LTspice.
 2. Open `design/ltspice/2-Stage op-Amp.asc`.
-3. The schematic includes `../../models/tsmc018.lib`, relative to the schematic directory. Review [models/README.md](models/README.md) for model details.
+3. The schematic includes `../../models/tsmc018.lib`, relative to the schematic directory. See [models/README.md](models/README.md) for model details.
 4. The custom symbols `cmosp` and `cmosn` are in `design/ltspice/sym/`. If LTspice does not resolve these relative symbol references, add that directory to its symbol search path.
 5. The schematic has transient analysis enabled and AC analysis commented out. To run AC analysis, comment out `.tran 10m` and enable `.ac dec 100 10 100Meg`.
 6. The directive `.step param Rz 1k 20k 1k` sweeps the compensation resistance from 1 kΩ to 20 kΩ. Use **View → Step Legend** to identify the `Rz=11k` trace. To simulate only that value, replace the sweep directive with `.param Rz=11k`.
@@ -79,4 +79,4 @@ M8 is set to 5 µm in the simulated circuit. A separate design note describes th
 
 ## Model file
 
-The circuit uses `models/tsmc018.lib`. Its header identifies the parameter set as **T58F SPICE BSIM3** and notes that flicker-noise parameters were manually added from another process. The model source and licence should be checked before redistributing the file publicly. More details are in [models/README.md](models/README.md).
+The circuit uses `models/tsmc018.lib`, which contains the BSIM3 Level 49 definitions used by the custom `CMOSN` and `CMOSP` symbols. Its header identifies the parameter set as T58F SPICE BSIM3 Version 3.1. See [models/README.md](models/README.md) for details.
