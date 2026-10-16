@@ -14,7 +14,7 @@ The circuit is designed for a 10 pF capacitive load. It uses a 3 pF Miller compe
 | Supply voltage | 1.8 V / 0 V |
 | Input common-mode voltage | 0.9 V |
 | Load capacitance | 10 pF |
-| Open-loop DC gain | 80 dB |
+| Open-loop DC gain | ~73 dB (simulation) |
 | Uncompensated unity-gain bandwidth | 9.25 MHz |
 | Uncompensated phase margin | 16.6° |
 | Compensated unity-gain bandwidth | 17.2 MHz |
@@ -22,7 +22,7 @@ The circuit is designed for a 10 pF capacitive load. It uses a 3 pF Miller compe
 | Miller compensation capacitor | 3 pF |
 | Selected series nulling resistor | 11 kΩ |
 
-The uncompensated Miller architecture shows poor phase margin. The feed-forward path through the Miller capacitor contributes a right-half-plane zero, adding phase lag. The uncompensated response has a reported unity-gain bandwidth of 9.25 MHz and phase margin of 16.6°.
+The original report states an open-loop DC gain of 80 dB, while the simulated response shows a value closer to 73 dB. The value of approximately 73 dB is recorded here to reflect the observed simulation. The uncompensated Miller architecture shows poor phase margin. The feed-forward path through the Miller capacitor contributes a right-half-plane zero, adding phase lag. The uncompensated response has a reported unity-gain bandwidth of 9.25 MHz and phase margin of 16.6°.
 
 A parametric SPICE sweep was used to evaluate the series nulling resistor. The selected value is 11 kΩ. The compensated response shows a unity-gain bandwidth of 17.2 MHz and phase margin of 78.2°. Simulation plots are available in [results/figures/](../results/figures/).
 
