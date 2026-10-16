@@ -1,13 +1,17 @@
-# Device models
+# Device model library
 
-The schematic expects a TSMC 180 nm SPICE model library at:
+The schematic includes:
 
 ```text
 models/tsmc018.lib
 ```
 
-The attached schematic originally referenced a library under a personal Windows directory. The project copy uses a relative include so the repository is not tied to that computer.
+This file is currently present in the public repository. Before sharing the repository further, confirm that the file's source and licence permit redistribution. A `.gitignore` entry does not remove files that are already tracked by Git.
 
-The model library was not included with the supplied files. Obtain it from an authorized source and add it locally if its license allows redistribution. Do **not** commit proprietary foundry models or PDK files unless you have explicit permission.
+## Provenance and suitability
 
-The schematic also uses custom LTspice symbols named `cmosp` and `cmosn`. These symbols were not supplied. Install them locally in LTspice or adapt the schematic to compatible symbols and model names. Record any local-only setup here once confirmed.
+The file is named `tsmc018.lib`, but its header identifies the parameter set as `T58F SPICE BSIM3`. It also contains a comment that flicker-noise parameters were manually added from another process. The filename alone is not evidence that it is an official or suitable TSMC 180 nm model. Confirm the provenance and compatibility with the intended design before describing it as such.
+
+If redistribution is not explicitly permitted, remove the model file from the public repository and retain an authorized local copy for running the schematic. Do not commit proprietary foundry models or PDK files without permission.
+
+The custom LTspice symbols are under `design/ltspice/sym/`. They reference the model names `CMOSP` and `CMOSN` with D, G, S, B terminals; confirm compatibility if LTspice produces netlist or model errors.
